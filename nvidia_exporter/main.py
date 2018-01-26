@@ -1,13 +1,9 @@
 import atexit
 import sys
-
-try:
-    from BaseHTTPServer import HTTPServer
-except ImportError:
-     from http.server import HTTPServer
+import time
 
 import pynvml
-from prometheus_client import MetricsHandler
+from prometheus_client import start_http_server
 
 from .standard_metrics import register_standard_metrics
 
@@ -21,9 +17,10 @@ def main():
         register_standard_metrics()
 
         print('Starting on port {}'.format(port))
-        httpd = HTTPServer(('', port), MetricsHandler)
-        httpd.serve_forever()
+        start_http_server(port)
 
+        while True:
+            time.sleep(10)
     except pynvml.NVMLError, err:
         print('NVML error: {}'.format(err))
 
