@@ -32,7 +32,7 @@ def register_standard_metrics():
                lambda h: len(nvmlDeviceGetComputeRunningProcesses(h))),
         Metric('gpu_utilization',
                'GPU Utilization percent',
-               lambda h: len(nvmlDeviceGetUtilizationRates(h).gpu))
+               lambda h: nvmlDeviceGetUtilizationRates(h).gpu)
  
     ]
 
